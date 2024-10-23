@@ -85,8 +85,69 @@ You may want to customize the following aspects of the code:
 - **Service Coverage**: The script only includes a subset of AWS services. Depending on your needs, you might need to extend it to cover additional services such as Glue, Redshift, or others.
 - **Error Handling**: The program logs errors when retrieving information from services but continues executing. Depending on your use case, you might want to handle some errors more strictly.
 
+## Dockerization
+
+This repository also provides a Dockerized version of the AWS Footprint Collector. This allows you to run the program in an isolated environment without needing to install Go or the AWS SDK on your local machine.
+
+### Dockerfile Overview
+
+The provided `Dockerfile` is a multi-stage build that compiles the Go application and packages it into a small Alpine-based Docker image.
+
+- **Stage 1**: Uses the official Go image to compile the `aws_footprint.go` program.
+- **Stage 2**: Uses a minimal Alpine image to run the compiled Go binary, reducing the image size.
+
+### Building the Docker Image
+
+To build the Docker image locally, follow these steps:
+
+1. Clone the repository and navigate to the project directory.
+2. Run the following command to build the Docker image:
+
+   ```bash
+   docker build -t aws_footprint .
+   ```
+
+This will create a Docker image named `aws_footprint` on your local machine.
+
+### Running the Docker Container
+
+To run the AWS Footprint Collector inside a Docker container:
+
+```bash
+docker run -it --rm aws_footprint
+```
+
+The program will prompt you for an AWS profile and region, and will generate a report of AWS resources as described in previous sections.
+
+### Pulling from Docker Hub
+
+Alternatively, you can skip building the image locally and pull the pre-built image directly from Docker Hub:
+
+```bash
+docker pull jequals5/aws_footprint:latest
+```
+
+Once the image is pulled, you can run it using:
+
+```bash
+docker run -it --rm jequals5/aws_footprint:latest
+```
+
+This will execute the program and prompt for your AWS profile and region, similar to the locally built image.
+
+### Using the Image
+
+Make sure that your AWS credentials are configured properly and are accessible to Docker. You can pass environment variables or mount your AWS credentials file if necessary:
+
+```bash
+docker run -it --rm -v ~/.aws:/root/.aws jequals5/aws_footprint:latest
+```
+
+This command mounts your AWS credentials from your local machine into the container so it can authenticate with AWS.
+
+---
+
 ## And So
 This AWS Footprint Collector provides a basic yet extensible solution to retrieve information from an AWS account programmatically. It's a useful tool to help with initial account assessments, audits, or simply to get a lay of the land.
 
 Feel free to tweak it to suit your needs or add additional services to enhance its utility. I hope this helps simplify your cloud operations!
-
