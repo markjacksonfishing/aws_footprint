@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: aws-footprint
+  namespace: aws-footprint
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+    nodePort: 30007 # Choose an available port in the range 30000-32767
+  selector:
+    app: aws-footprint
