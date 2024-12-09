@@ -145,6 +145,8 @@ docker run -it --rm -v ~/.aws:/root/.aws jequals5/aws_footprint:latest
 
 This command mounts your AWS credentials from your local machine into the container so it can authenticate with AWS.
 
+If you want to pull the already built container, you can find it on Docker Hub at [anuclei/aws_footprint](https://hub.docker.com/r/anuclei/aws_footprint).
+
 ---
 
 ## And So
